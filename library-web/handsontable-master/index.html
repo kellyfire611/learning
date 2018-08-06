@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.css">
+  <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.19.0/handsontable.full.css">
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.19.0/handsontable.full.js"></script>
+  <script src="plugin/handontable-choosen-editor.js"></script>
+  
+</head>
+
+<body>
+  <div id="example"></div>
+  <div id="example_handsontable"></div>
+  Selected Id: <span id="selectedId"></span>
+  <!-- allowInvalid: false -->
+
+  <div id="handsontable"></div>
+
+  <script>
+//       (function(Handsontable){
+//   function customRenderer(hotInstance, td, row, column, prop, value, cellProperties) {
+//     // Optionally include `BaseRenderer` which is responsible for adding/removing CSS classes to/from the table cells.
+//     Handsontable.renderers.BaseRenderer.apply(this, arguments);
+
+//     // ...your custom logic of the renderer
+//     // debugger;
+//     var selectedId;
+//     for (var index = 0; index < optionsList.length; index++)
+//     {
+//         if (parseInt(value) === optionsList[index].id)
+//         {
+//             selectedId = optionsList[index].id;
+//             value = optionsList[index].text;            
+//         }
+//     }
+//   }
+
+//   // Register an alias
+//   Handsontable.renderers.registerRenderer('my.custom', customRenderer);
+
+//   // you can use the selectedId for posting to the DB or server
+//   $('#selectedId').text(selectedId);
+// })(Handsontable);
+
+//     var data = [
+//       ["", "Ford", "Tesla", "Toyota", "Honda"],
+//       ["2017", 10, 11, 12, 13],
+//       ["2018", 20, 11, 14, 13],
+//       ["2019", 30, 15, 12, 13]
+//     ];
+
+//     var container = document.getElementById('example');
+//     var hot = new Handsontable(container, {
+//       data: data,
+//       rowHeaders: true,
+//       colHeaders: true
+//     });
+
+  
+// var mydata = [{ num: 1, num2: 2, num3: 3 }
+//              ,{ num: 1, num2: 2, num3: 3 }
+//              ,{ num: 1, num2: 2, num3: 3 }
+//              ,{ num: 1, num2: 2, num3: 3 }
+//              ,{ num: 1, num2: 2, num3: 3 }
+//              ,{ num: 1, num2: 2, num3: 3 }];
+
+// var optionsList = [{id: 1, text: 'first'}, {id: 2, text: 'second'},{id: 3, text: 'Third'}, {id: 4, text: 'Forth'},{id: 5, text: 'Fith'}];
+// $(document).ready(function () {
+
+    
+//     var columnsList = 
+//         [{      
+//             data: 'num',
+//             // editor: 'select2',
+//             // renderer: customDropdownRenderer,
+//             // width: '200px',
+//             // select2Options: { 
+//             //     data: optionsList,
+//             //     dropdownAutoWidth: true,                        
+//             //     width: 'resolve'
+//             // }
+//         },{      
+//             data: 'num2',
+//             // editor: 'select2',
+//             // renderer: customDropdownRenderer,
+//             // width: '200px',
+//             // select2Options: { 
+//             //     data: optionsList,
+//             //     dropdownAutoWidth: true,                        
+//             //     width: 'resolve'
+//             // }
+//         },{      
+//             data: 'num3',
+//             editor: 'select2',
+//             // renderer: customDropdownRenderer,
+//             renderer: 'my.custom',
+//             // width: '200px',
+//             select2Options: { 
+//                 data: optionsList,
+//                 dropdownAutoWidth: true,                        
+//                 width: 'resolve'
+//             }
+//         }
+//         ];
+// //     $container = $('#example_handsontable');
+  
+// //     $container.handsontable({
+// //         data: mydata,
+// //     minSpareRows: 0,
+// //     colHeaders: true,
+// //     contextMenu: true,
+// //     columns: columnsList
+// //   });    
+
+//    var container2 = document.getElementById('example_handsontable');
+
+
+//     var hot = new Handsontable(container2, {
+//       data: mydata,
+//       rowHeaders: true,
+//       colHeaders: true,
+//       contextMenu: true,
+//       columns: columnsList
+//     });
+// });
+
+// function customDropdownRenderer(hotInstance, td, row, col, prop, value, cellProperties)
+// {
+//     Handsontable.renderers.BaseRenderer.apply(this, arguments);
+
+//     var selectedId;
+//     for (var index = 0; index < optionsList.length; index++)
+//     {
+//         if (parseInt(value) === optionsList[index].id)
+//         {
+//             selectedId = optionsList[index].id;
+//             value = optionsList[index].text;            
+//         }
+//     }
+    
+//     // you can use the selectedId for posting to the DB or server
+//     $('#selectedId').text(selectedId);
+// }
+
+
+  </script>
+
+  <script>
+  var data = [{id: "SPOT"}];
+  var hot;
+
+$(document).ready(function () {
+
+    hot = new Handsontable(document.getElementById("handsontable"), {
+        data: data,
+        minSpareRows: 1,
+        minRows: 5,
+        rowHeaders: true,
+        columns: [
+            {
+                renderer: customDropdownRenderer,
+                editor: "chosen",
+                width: 150,
+                chosenOptions: {
+                    data: [
+                        {
+                            id: "SPOT",
+                            label: "Spot"
+                        }, {
+                            id: "AFLOAT",
+                            label: "Afloat"
+                        }, {
+                            id: "PREORDER",
+                            label: "Preorder"
+                        }, {
+                            id: "FORWARD",
+                            label: "Forward"
+                        }
+                    ]
+                }
+            },
+            {
+                renderer: customDropdownRenderer,
+                editor: "chosen",
+                width: 150,
+                chosenOptions: {
+                    multiple: true,
+                    data: [
+                        {
+                            id: "1",
+                            label: "Catuai"
+                        }, {
+                            id: "2",
+                            label: "Bourbone"
+                        }, {
+                            id: "3",
+                            label: "Geisha"
+                        }
+                    ]
+                }
+            },
+            {}
+        ]
+    });
+});
+
+function customDropdownRenderer(instance, td, row, col, prop, value, cellProperties) {
+    Handsontable.renderers.BaseRenderer.apply(this, arguments);
+
+    var selectedId;
+    var optionsList = cellProperties.chosenOptions.data;
+
+    if(typeof optionsList === "undefined" || typeof optionsList.length === "undefined" || !optionsList.length) {
+        Handsontable.TextCell.renderer(instance, td, row, col, prop, value, cellProperties);
+        return td;
+    }
+
+    var values = (value + "").split(",");
+    value = [];
+    for (var index = 0; index < optionsList.length; index++) {
+
+        if (values.indexOf(optionsList[index].id + "") > -1) {
+            selectedId = optionsList[index].id;
+            value.push(optionsList[index].label);
+        }
+    }
+    value = value.join(", ");
+
+    
+    Handsontable.TextCell.renderer(instance, td, row, col, prop, value, cellProperties);
+    return td;
+}
+  </script>
+</body>
+
+</html>
